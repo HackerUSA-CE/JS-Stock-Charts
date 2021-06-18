@@ -1,8 +1,8 @@
 async function main(){
 
-    const timeChart = document.querySelector('#time-chart');
-    const highestPriceChart = document.querySelector('#highest-price-chart');
-    const averagePriceChart = document.querySelector('#highest-price-chart');
+    const timeChartCanvas = document.querySelector('#time-chart');
+    const highestPriceChartCanvas = document.querySelector('#highest-price-chart');
+    const averagePriceChartCanvas = document.querySelector('#highest-price-chart');
     
 }
 
