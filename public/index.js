@@ -1,8 +1,16 @@
-const colors = {
-    GME: 'rgba(61, 161, 61, 0.7)',
-    MSFT: 'rgba(209, 4, 25, 0.7)',
-    DIS: 'rgba(18, 4, 209, 0.7)',
-    BNTX: 'rgba(166, 43, 158, 0.7)'
+function getColor(stock){
+    if(stock === "GME"){
+        return 'rgba(61, 161, 61, 0.7)'
+    }
+    if(stock === "MSFT"){
+        return 'rgba(209, 4, 25, 0.7)'
+    }
+    if(stock === "DIS"){
+        return 'rgba(18, 4, 209, 0.7)'
+    }
+    if(stock === "BNTX"){
+        return 'rgba(166, 43, 158, 0.7)'
+    }
 }
 
 async function main() {
@@ -10,7 +18,7 @@ async function main() {
     const highestPriceChartCanvas = document.querySelector('#highest-price-chart');
     const averagePriceChartCanvas = document.querySelector('#average-price-chart');
 
-    const response = await fetch(`https://api.twelvedata.com/time_series?symbol=GME,MSFT,DIS,BNTX&interval=1day&apikey=API_KEY`)
+    const response = await fetch(`https://api.twelvedata.com/time_series?symbol=GME,MSFT,DIS,BNTX&interval=1day&apikey=API_TOKEN`)
 
     const result = await response.json()
 
@@ -18,16 +26,18 @@ async function main() {
 
     const stocks = [GME, MSFT, DIS, BNTX];
 
+    stocks.forEach( stock => stock.values.reverse())
+
     // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
-            labels: stocks[0].values.reverse().map(value => value.datetime),
+            labels: stocks[0].values.map(value => value.datetime),
             datasets: stocks.map(stock => ({
                 label: stock.meta.symbol,
-                backgroundColor: colors[stock.meta.symbol],
-                borderColor: colors[stock.meta.symbol],
-                data: stock.values.reverse().map(value => parseFloat(value.high))
+                backgroundColor: getColor(stock.meta.symbol),
+                borderColor: getColor(stock.meta.symbol),
+                data: stock.values.map(value => parseFloat(value.high))
             }))
         }
     });
@@ -40,10 +50,10 @@ async function main() {
             datasets: [{
                 label: 'Average',
                 backgroundColor: stocks.map(stock => (
-                    colors[stock.meta.symbol]
+                    getColor(stock.meta.symbol)
                 )),
                 borderColor: stocks.map(stock => (
-                    colors[stock.meta.symbol]
+                    getColor(stock.meta.symbol)
                 )),
                 data: stocks.map(stock => (
                     findHighest(stock.values)
@@ -60,10 +70,10 @@ async function main() {
             datasets: [{
                 label: 'Average',
                 backgroundColor: stocks.map(stock => (
-                    colors[stock.meta.symbol]
+                    getColor(stock.meta.symbol)
                 )),
                 borderColor: stocks.map(stock => (
-                    colors[stock.meta.symbol]
+                    getColor(stock.meta.symbol)
                 )),
                 data: stocks.map(stock => (
                     calculateAverage(stock.values)
