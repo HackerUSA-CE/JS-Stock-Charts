@@ -18,7 +18,7 @@ async function main() {
     const highestPriceChartCanvas = document.querySelector('#highest-price-chart');
     const averagePriceChartCanvas = document.querySelector('#average-price-chart');
 
-    const response = await fetch(`https://api.twelvedata.com/time_series?symbol=GME,MSFT,DIS,BNTX&interval=1day&apikey=API_TOKEN`)
+    const response = await fetch(`https://api.twelvedata.com/time_series?symbol=GME,MSFT,DIS,BNTX&interval=1day&apikey=b2b0e11651294ee9a789558a1625b754`)
 
     const result = await response.json()
 
@@ -48,7 +48,7 @@ async function main() {
         data: {
             labels: stocks.map(stock => stock.meta.symbol),
             datasets: [{
-                label: 'Average',
+                label: 'Highest',
                 backgroundColor: stocks.map(stock => (
                     getColor(stock.meta.symbol)
                 )),
