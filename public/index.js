@@ -28,7 +28,6 @@ async function main() {
 
     stocks.forEach( stock => stock.values.reverse())
 
-    // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
@@ -42,7 +41,6 @@ async function main() {
         }
     });
 
-    // High Chart
     new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
         data: {
